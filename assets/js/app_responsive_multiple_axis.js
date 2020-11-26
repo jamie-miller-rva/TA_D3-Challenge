@@ -5,10 +5,20 @@
     Create and situate the axes and labels to the left and bottom of the chart (to account for margins).
 
     Note: the VS Code Live Server extension is used to run the visualization. This will host the page at localhost:5501 in your web browser.
+
+    Day 3 Activity 01 was referenced for Steps for psuedo code
+    Day 3 Activity 09 was referenced for simple scatter plot
+
+    Day 2 Extra Content Extra_Responsive_Chart was referenced for responsive webpage
+
+    Day 3 Activity 12 was referenced for multi-choice axis 
 */
 
-
-// Make responsive using Day 2: Extra Content Extra_REsponsive_Chart:
+// *******************************************************************************
+// * Step 12: Make responsive using Day 2: Extra Content Extra_Responsive_Chart: *
+// *******************************************************************************
+// use the window innerWidth and innerHeight to determine svgWidth and svgHeight
+// then wrap the app.js work in a loadChart function
 d3.select(window).on("resize", handleResize);
 
 // When the browser loads, loadChart() is called
@@ -59,8 +69,7 @@ function loadChart() {
         .attr("class", "chart");
 
     // Step 3 & 4:
-    // Import data from the data.csv file in our data folder
-    // Parse the data
+    // Import and Parse the data from the data.csv file in our data folder
     // =================================
     d3.csv("assets/data/data.csv").then(function (data) {
         console.log(data);
@@ -72,7 +81,7 @@ function loadChart() {
         });
 
         // Step 5: Create the y and x scales for the chart
-        // Note for this "responsive version I used extent to get the min and max"
+        // Note for this "responsive version I used extent to get the min and max for domain"
         // =================================
         var xLinearScale = d3.scaleLinear()
             .domain(d3.extent(data, d => d.poverty))
@@ -87,7 +96,7 @@ function loadChart() {
         var bottomAxis = d3.axisBottom(xLinearScale);
         var leftAxis = d3.axisLeft(yLinearScale);
 
-        // Step 8: Append the axes to the chartGroup
+        // Step 8: Append the axes to the chartGroup (move to bottom and left)
         // ==============================================
         chartGroup.append("g")
             .attr("transform", `translate(0, ${height})`)
@@ -96,7 +105,7 @@ function loadChart() {
         chartGroup.append("g")
             .call(leftAxis);
 
-        // Step 9: Create axes labels
+        // Step 9: Create axes labels (place within a group tag for better DOM visability)
         //  =============================================
         // Bottom axis
         chartGroup.append("g")
@@ -119,9 +128,7 @@ function loadChart() {
             .text("Without Access to Healthcare (%)")
             .attr("class", "active");
 
-
-
-        // Step 9: Create Circles and State Text
+        // Step 9: Create Circles and State Text (place within a group tag for better DOM visability)
         // ===========================================
         var circlesGroup = chartGroup.append("g")
             .attr("class", "circles")
@@ -134,6 +141,7 @@ function loadChart() {
             .attr("r", "15")
             .attr("class", "stateCircle");
 
+        // Add a textGroup to place state abbr within the circles created in the circlesGroup
         var textGroup = chartGroup.append("g")
             .attr("class", "stateText")
             .selectAll("texts")
@@ -166,7 +174,5 @@ function loadChart() {
             .on("mouseout", function (data) {
                 toolTip.hide(data);
             });
-
-
     });
 }    
