@@ -1,5 +1,5 @@
-/* Create a scatter plot using D3 techniques between two of the data variables Poverty (x axis) vs. Healthcare (y axis)
-The scatter plot must represent each state (and Washington DC) with circle elements. 
+/* Create a scatter plot using two of the data variables - Poverty (x axis) vs. Healthcare (y axis)
+The scatter plot must represent a circle for each state (and Washington DC). 
 Data will be pulled from the data.csv file provided in the data folder.
 Include state abbreviations in the circles.
 Create and situate your axes and labels to the left and bottom of the chart.
@@ -111,7 +111,7 @@ d3.csv("assets/data/data.csv").then(function (data) {
         .attr("r", "15")
         .attr("class", "stateCircle");
 
-    chartGroup.append("g")
+    var textGroup = chartGroup.append("g")
         .attr("class", "stateText")
         .selectAll("texts")
         .data(data)
@@ -136,7 +136,7 @@ d3.csv("assets/data/data.csv").then(function (data) {
     chartGroup.call(toolTip);
 
     // Create event listner 
-    circlesGroup.on("click", function (data) {
+    textGroup.on("mouseover", function (data) {
         toolTip.show(data, this);
     })
         // onmouseout event
