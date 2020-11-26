@@ -1,12 +1,13 @@
-/* Create a scatter plot using two of the data variables - Poverty (x axis) vs. Healthcare (y axis)
-The scatter plot must represent a circle for each state (and Washington DC). 
-Data will be pulled from the data.csv file provided in the data folder.
-Include state abbreviations in the circles.
-Create and situate your axes and labels to the left and bottom of the chart.
-Note: You'll need to the VS Code Live Server extension to run the visualization. This will host the page at localhost:5501 in your web browser.
+/* Assignment: Create a scatter plot using two of the data variables - Poverty (x axis) vs. Healthcare (y axis)
+    The scatter plot must represent a circle for each state (and Washington DC). 
+    Data will be pulled from the data.csv file provided in the data folder (use relative path from index.html file).
+    Include state abbreviations in the circles.
+    Create and situate the axes and labels to the left and bottom of the chart (to account for margins).
+
+    Note: the VS Code Live Server extension is used to run the visualization. This will host the page at localhost:5501 in your web browser.
 */
 
-// Step 1: Set up our chart area
+// Step 1: Set up the chart area
 //= ================================
 var svgWidth = 960;
 var svgHeight = 500;
