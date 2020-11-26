@@ -80,7 +80,7 @@ d3.csv("assets/data/data.csv").then(function (data) {
         .attr("class", "bottomAxis")
         .append("text")
         .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
-        .attr("class", "aText")
+        .attr("class", "axisText")
         .text("In Poverty (%)")
         .attr("class", "active");
 
@@ -92,13 +92,13 @@ d3.csv("assets/data/data.csv").then(function (data) {
         .attr("y", 0 - margin.left + 40)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
-        .attr("class", "aText")
+        .attr("class", "axisText")
         .text("Without Access to Healthcare (%)")
         .attr("class", "active");
 
 
 
-    // Step 9: Create Circles
+    // Step 9: Create Circles and State Text
     // ===========================================
     var circlesGroup = chartGroup.append("g")
         .attr("class", "circles")
@@ -117,8 +117,8 @@ d3.csv("assets/data/data.csv").then(function (data) {
         .data(data)
         .enter()
         .append("text")
-        .attr("x", d => xLinearScale(d.poverty))
-        .attr("y", d => yLinearScale(d.healthcare))
+        .attr("x", d => xLinearScale(d.poverty) - 0.5) // the subtraction of 0.5 is for positioning of stateText within the circle
+        .attr("y", d => yLinearScale(d.healthcare) + 5) // the addition of 5 is for positioning of stateText within the circle
         .attr("class", "stateText")
         .html(function (d) {
             return (`${d.abbr}`)        
@@ -129,7 +129,7 @@ d3.csv("assets/data/data.csv").then(function (data) {
     var toolTip = d3.tip()
         .attr("class", "d3-tip")
         .html(function (d) {
-            return (`${d.state}<br>Poverty: ${d.poverty}<br> Without Healthcare: ${d.healthcare}`);
+            return (`${d.state}<br>Poverty: ${d.poverty}%<br> Without Healthcare: ${d.healthcare}%`);
         });
 
     // Step 11 Create tooltip in chart

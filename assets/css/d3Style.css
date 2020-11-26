@@ -1,4 +1,4 @@
-.aText {
+.axisText {
   font-family: sans-serif;
   font-size: 16px;
   text-anchor: middle;
@@ -26,13 +26,16 @@
 /* font size dependent on radius, see app.js */
 .stateText {
   font-family: sans-serif;
-  fill: #fff;
+  fill: black;
   text-anchor: middle;
+  font-weight: bold;
+  stroke:rgb(173, 209, 230);
+  stroke-width: 0.5px;
 }
 
 .stateCircle {
   fill: #89bdd3;
-  stroke: #e3e3e3;
+  stroke: lightgrey;
 }
 
 .chart {
@@ -58,13 +61,13 @@
     display: none;
   }
 
-  .aText {
+  .axisText {
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 400px) {
-  .aText {
+  .axisText {
     font-size: 13px;
   }
 }
