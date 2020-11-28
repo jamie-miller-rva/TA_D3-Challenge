@@ -309,13 +309,31 @@ function loadChart() {
                         povertyLabel
                             .classed("active", false)
                             .classed("inactive", true);
-                    } else {
+                        ageLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+
+                    } else if(chosenXAxis === "age") {
+                        incomeLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        povertyLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                        ageLabel
+                            .classed("active", true)
+                            .classed("inactive", false);
+                    }
+                    else {
                         incomeLabel
                             .classed("active", false)
                             .classed("inactive", true);
                         povertyLabel
                             .classed("active", true)
                             .classed("inactive", false);
+                        ageLabel
+                            .classed("active", false)
+                            .classed("inactive", true);                
                     }
                 }
             });
