@@ -1,13 +1,13 @@
-/* Assignment: Create a scatter plot to examine the relationship between Poverty, Income and Age (x axis) on Access to Healthcare (y axis)
-    The scatter plot represents a circle for each state (and Washington DC). 
+/*  Create a scatter plot to examine the relationship Poverty, Income and Age (x axis) have on Access to Healthcare (y axis)
+    The scatter plot displays a circle for each state (and Washington DC).
+    Includes state abbreviations in the circles. 
     Data is pulled from the data.csv file provided in the data folder (uses relative path from index.html file).
-    Includes state abbreviations in the circles.
-    Creates and situates axes and labels to the left and bottom of the chart (to account for margins).
-
+    
+    The page is responsive
     Note: the Visual Studio Code extention: Live Server is used to serve the visualization at localhost:5501 in default web browser.
 */
 
-// Make responsive using D3 - Extra_Responsive_Chart example from Day 2:
+// Make responsive using Extra_Responsive_Chart example from D3 - Day 2:
 d3.select(window).on("resize", handleResize);
 
 // When the browser loads, loadChart() is called
@@ -23,9 +23,9 @@ function handleResize() {
     }
 }
 
-/* Outline of functions created and when they are called in reference to loading the data
-function loadChart()
-    // Create functions for use after data is loaded:
+/* The following functions are created prior to loading data and are called once the data is loaded
+
+    // Created functions are called after data is loaded:
     function xScale(data, chosenXAxis)
     function renderAxes(newXScale, xAxis) -- includes transition
     function renderCircles(circlesGroup, newXScale, chosenXAxis) -- includes transition
@@ -36,12 +36,12 @@ function loadChart()
     // Format the data from string to number
     // Create the x axis scale for the chart using xScale(data, chosenXAxis)
     // Create a y scale function 
-    // Create inial axis functions (bottomAxis and leftAxis)
+    // Create inital axis functions (bottomAxis and leftAxis)
     // Append x axis (xAxis) to the chartGroup
     // Append y axis to chartGroup
     // Append inital circles to chartGroup
     // Append inital text to chartGroup
-    // Create x axis labels (for poverty and income)
+    // Create x axis labels (for poverty, income and age)
     // Append y axis label to chartGroup (healthcare)
     // Update toolTip using the updateToolTip(chosenXAxis, circlesGroup) inial chosenXAxis is "poverty"
     // Create Event Listners for x axis labels
@@ -51,7 +51,7 @@ function loadChart()
             // Update xScale for new "value" / data using xScale(data, chosenXAxis)
             // Update x axis with transition using renderAxes(xLinearScale, xAxis)
             // Update circles with new x values using renderCircles(circlesGroup, xLinearScale, chosenXAxis)
-            // Update tooltips with new info using updateToolTip(chosenXAxis, circlesGroup)
+            // Update tooltips with new info using updateToolTip(chosenXAxis, textGroup) -- use textGroup as it is "on-top"
             // Update the x label class (active vs. inactive) to change x label text to/from bold
 */
 
@@ -61,7 +61,7 @@ function loadChart() {
     var width = parseInt(d3.select("#scatter").style("width"));
 
     // Designate the height of the graph in terms of the width
-    var height = width - width / 3.9;    
+    var height = width - width / 4.0;    
 
     // Margin spacing for graph
     var margin = {
@@ -72,7 +72,7 @@ function loadChart() {
     };
 
     // space for placing words
-    var labelArea = 110;
+    var labelArea = 120;
 
     // padding to adjust the axis lables
     var textPadBot = 40;
@@ -99,7 +99,7 @@ function loadChart() {
         // create scales dependent on the data (d[chosenXAxis]) 
         var xLinearScale = d3.scaleLinear()
             .domain([
-                d3.min(data, d => d[chosenXAxis]) * 0.8, // adjust as needed
+                d3.min(data, d => d[chosenXAxis]) * 0.9, // adjust as needed
                 d3.max(data, d => d[chosenXAxis]) * 1.2  // adjust as needed
             ])
             .range([0, width]);
@@ -136,9 +136,8 @@ function loadChart() {
 
     // updateToolTip function: used for updating circles group with new tooltip
     function updateToolTip(chosenXAxis, circlesGroup) {
-
+        // get label from chosenXAxis
         var label;
-
         if (chosenXAxis === "poverty") {
             label = "Poverty";
         }
@@ -186,7 +185,7 @@ function loadChart() {
         // Create the x scale for the chart using the xScale function above       
         var xLinearScale = xScale(data, chosenXAxis);
 
-        // Create a y scale function
+        // Create y scale function
         var yLinearScale = d3.scaleLinear()
             .domain(d3.extent(data, d => d.healthcare))
             .range([height, 0]);
@@ -195,7 +194,7 @@ function loadChart() {
         var bottomAxis = d3.axisBottom(xLinearScale);
         var leftAxis = d3.axisLeft(yLinearScale);
 
-        // Append xAxis to the chartGroup
+        // Append x axis to the chartGroup
         var xAxis = chartGroup.append("g")
             .classed("x-axis", true)
             .attr(
@@ -208,7 +207,7 @@ function loadChart() {
             .classed("y-axis", true)
             .call(leftAxis);
 
-        // Append inital circles
+        // Append inital circles to the chartgroup
         var circlesGroup = chartGroup.append("g")
             .classed("circlesGroup", true)
             .selectAll("circle")
@@ -220,7 +219,7 @@ function loadChart() {
             .attr("r", 15)
             .attr("class", "stateCircle");
 
-        // Append inital text
+        // Append inital text to the chartgroup
         var textGroup = chartGroup.append("g")
             .attr("class", "stateText")
             .selectAll("texts")
@@ -233,7 +232,7 @@ function loadChart() {
                 return (`${d.abbr}`)        
             });
 
-        // Create x axis labels (poverty and income)       
+        // Create x axis labels (poverty, income and age)       
         var labelsGroup = chartGroup.append("g")
             .attr("class", "xLabels")
             .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`);
