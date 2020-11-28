@@ -142,8 +142,11 @@ function loadChart() {
         if (chosenXAxis === "poverty") {
             label = "Poverty";
         }
-        else {
+        else if (chosenXAxis === "income") {
             label = "Income";
+        }
+        else {
+            label = "Age";
         }
 
         var toolTip = d3.tip()
@@ -176,6 +179,7 @@ function loadChart() {
         data.forEach(function (data) {
             data.poverty = +data.poverty;
             data.income = +data.income;
+            data.age = +data.age;
             data.healthcare = +data.healthcare;
         });
 
@@ -236,17 +240,24 @@ function loadChart() {
 
         var povertyLabel = labelsGroup.append("text")
             .attr("x", 0)
-            .attr("y", 0)
+            .attr("y", -10)
             .attr("value", "poverty") // value to grab for event listner
             .classed("active", true)
             .text("Poverty (%)");
 
         var incomeLabel = labelsGroup.append("text")
             .attr("x", 0)
-            .attr("y", 25) // add 25 to drop down below poverty label
+            .attr("y", 10) // add 25 to drop down below poverty label
             .attr("value", "income") // value to grab for event listner
             .classed("inactive", true)
             .text("Household Income (Median)");
+
+        var ageLabel = labelsGroup.append("text")
+            .attr("x", 0)
+            .attr("y", 30) // add 25 to drop down below poverty label
+            .attr("value", "age") // value to grab for event listner
+            .classed("inactive", true)
+            .text("Age (Median)");
 
         // Append y axis label (healthcare)
         chartGroup.append("g")
