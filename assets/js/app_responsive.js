@@ -37,7 +37,7 @@ function loadChart() {
         top: 30,
         right: 20,
         bottom: 60,
-        left: 100
+        left: 120
     };
 
     var width = svgWidth - margin.left - margin.right;

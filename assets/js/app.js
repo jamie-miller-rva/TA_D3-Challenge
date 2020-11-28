@@ -119,8 +119,7 @@ d3.csv("assets/data/data.csv").then(function (data) {
         .enter()
         .append("text")
         .attr("x", d => xLinearScale(d.poverty) - 0.5) // the subtraction of 0.5 is for positioning of stateText within the circle
-        .attr("y", d => yLinearScale(d.healthcare) + 5) // the addition of 5 is for positioning of stateText within the circle
-        .attr("class", "stateText")
+        .attr("y", d => yLinearScale(d.healthcare) + 5) // the addition of 5 is for positioning of stateText within the circle        
         .html(function (d) {
             return (`${d.abbr}`)        
         });
