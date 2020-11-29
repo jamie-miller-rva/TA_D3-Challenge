@@ -59,9 +59,11 @@ function loadChart() {
 
     // Grab the width of the containing box
     var width = parseInt(d3.select("#scatter").style("width"));
+    console.log(width);
 
     // Designate the height of the graph in terms of the width
-    var height = width - width / 4.0;    
+    var height = width - width / 3.9;
+    console.log(height);    
 
     // Margin spacing for graph
     var margin = {
@@ -71,7 +73,7 @@ function loadChart() {
         left: 80
     };
 
-    // space for placing words
+    // space for placing labels
     var labelArea = 120;
 
     // padding to adjust the axis lables
@@ -82,16 +84,19 @@ function loadChart() {
     var svg = d3.select("#scatter")
         .append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("class", "chart");
     
     // Create a variable chartGroup and append with an <g> tag that will hold the chart,
-    // Shift the chartGroup by left and top margins (and add class chart to link to d3Style.css)   
+    // Shift the chartGroup by left and top margins (and add class "chart" to link to d3Style.css)   
     var chartGroup = svg.append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.bottom - labelArea - textPadBot})`)
-        .attr("class", "chart");
+        // .attr("height", height)
+        .attr("transform", `translate(${margin.left}, ${margin.bottom - labelArea - textPadBot})`)        
+        .attr("class", "chartGroup");
 
     // Prior to loading Data Set inital Parameter(s) for chosenXAxis for inital loading of page
     var chosenXAxis = "poverty";
+    var chosenYAxis = "healthcare";
 
     // Create functions to be used after data is loaded
     // xScale function: used for updating xScale var upon click on axis label
@@ -104,6 +109,17 @@ function loadChart() {
             ])
             .range([0, width]);
         return xLinearScale;
+    }
+
+    function yScale(data, chosenYAxis) {
+        // create scales dependent on data (d[healthcare])
+        var yLinearScale = d3.scaleLinear()
+            .domain([
+                d3.min(data, d => d[chosenYAxis]) * 0.9,
+                d3.max(data, d => d[chosenYAxis]) * 1.2
+            ])
+            .range([height, 0]);
+        return yLinearScale; 
     }
 
     // renderAxes function: used for updating xScale var upon click on axis label (includes transition)
@@ -186,9 +202,7 @@ function loadChart() {
         var xLinearScale = xScale(data, chosenXAxis);
 
         // Create y scale function
-        var yLinearScale = d3.scaleLinear()
-            .domain(d3.extent(data, d => d.healthcare))
-            .range([height, 0]);
+        var yLinearScale = yScale(data, chosenYAxis);
 
         // Create inital axis function
         var bottomAxis = d3.axisBottom(xLinearScale);

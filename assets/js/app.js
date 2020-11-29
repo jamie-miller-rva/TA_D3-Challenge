@@ -53,11 +53,11 @@ d3.csv("assets/data/data.csv").then(function (data) {
     // Step 5: Create the y and x scales for the chart
     // =================================
     var xLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.poverty)])
+        .domain(d3.extent(data, d => d.poverty))
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.healthcare)])
+        .domain(d3.extent(data, d => d.healthcare))
         .range([height, 0]);
 
     // Step 6: Create the axes
@@ -80,7 +80,8 @@ d3.csv("assets/data/data.csv").then(function (data) {
     chartGroup.append("g")
         .attr("class", "bottomAxis")
         .append("text")
-        .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
+        .attr("transform",
+             `translate(${width / 2}, ${height + margin.top + 20})`)
         .attr("class", "axisText")
         .text("In Poverty (%)")
         .attr("class", "active");

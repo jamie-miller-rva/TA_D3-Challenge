@@ -52,7 +52,7 @@
 
 .chart {
   display: block;
-  margin: 0;
+  margin-top: 250;
 }
 
 .d3-tip {
